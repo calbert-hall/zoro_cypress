@@ -1,4 +1,4 @@
-# Applitools Tutorial - Cypress
+# Zoro - Fixes for loading issues.
 
 Get started with Applitools Eyes visual testing with this example of using the [Cypress](https://www.cypress.io/) and the [Eyes Cypress SDK](https://www.npmjs.com/package/@applitools/eyes-cypress).
 
