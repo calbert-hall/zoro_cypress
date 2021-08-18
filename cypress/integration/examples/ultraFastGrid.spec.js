@@ -1,36 +1,54 @@
+/// <reference types="Cypress" />
+/// <reference types="cypress-xpath" />
+
 describe("AppTest", () => {
 
     it(`ultraFastTest`, function () {
-        // Navigate to the url we want to test
-        // ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
-        // but then change the above URL to https://demo.applitools.com/index_v2.html
-        // (for the 2nd run)
-        cy.visit('https://demo.applitools.com');
+        
+        cy.visit('https://www.zoro.com/')
 
-        // Call Open on eyes to initialize a test session
         cy.eyesOpen({
-            appName: 'Demo App - Cypress',
-            testName: 'Smoke Test - Cypress',
+            appName: 'Zoro',
+            testName: 'Smoke Test - Cart',
         })
 
-        // check the login page with fluent api, see more info here
-        // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
+        cy.get('#layout_footer').scrollIntoView({duration: 4000})
+        cy.wait(3000)
+        cy.get('#main-content').scrollIntoView({duration: 2000})
+
         cy.eyesCheckWindow({
-            tag: "Login Window",
+            tag: "Home",
             target: 'window',
             fully: true
         });
 
-        cy.get('#log-in').click()
+        cy.get("input[placeholder='Search by keyword or model #']").type('G2205445')
+        cy.get(".fa.fa-search").click()
 
-        // Check the app page
+        //Item Page
+        cy.wait(1000)
+
+        cy.get('#v-app > div > div > div > div.product-details-page__sections > section:nth-child(6)').scrollIntoView({duraction: 10000})
+        cy.get('#main-content').scrollIntoView({duration: 2000})
         cy.eyesCheckWindow({
-            tag: "App Window",
+            tag: "Item",
             target: 'window',
             fully: true
         });
 
-        // Call Close on eyes to let the server know it should display the results
+        cy.xpath('//button[@aria-label="Add main product to cart"]').click()
+        cy.get('.header-cart__icon').click()
+
+        // //Cart Page        
+        cy.wait(1000)
+        cy.get('#layout_footer').scrollIntoView({duration: 5000})
+        cy.get('#main-content').scrollIntoView({duration: 2000})
+
+        cy.eyesCheckWindow({
+            tag: "Cart",
+            target: 'window',
+            fully: true
+        });
         cy.eyesClose()
     });
 
